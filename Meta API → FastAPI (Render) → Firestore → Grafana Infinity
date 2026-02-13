@@ -1,0 +1,20 @@
+
+## Deploy no Render
+
+1. Conecte este repositório ao Render
+2. Configure as variáveis de ambiente:
+   - `META_ACCESS_TOKEN`: Token de acesso da Meta
+   - `META_AD_ACCOUNT_ID`: ID da conta de anúncios
+   - `API_KEY`: Chave de segurança (gerada automaticamente)
+   - `GOOGLE_CLOUD_PROJECT`: ID do projeto Firebase
+
+3. O `render.yaml` já configura:
+   - Web Service (API FastAPI)
+   - Cron Job (coleta a cada 30 min)
+
+## Endpoints
+
+### `GET /health`
+Health check
+
+### `
