@@ -14,9 +14,15 @@ from pydantic import BaseModel
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Inicializar Firebase
 if not firebase_admin._apps:
-    firebase_admin.initialize_app(options={"projectId": os.getenv("GOOGLE_CLOUD_PROJECT", "dashmeta-aba7d")})
+    creds_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_JSON")
+    if creds_json:
+        import json
+        cred = credentials.Certificate(json.loads(creds_json))
+        firebase_admin.initialize_app(cred, options={"projectId": os.getenv("GOOGLE_CLOUD_PROJECT", "dashmeta-aba7d")})
+    else:
+        firebase_admin.initialize_app(options={"projectId": os.getenv("GOOGLE_CLOUD_PROJECT", "dashmeta-aba7d")})
+
 db = firestore.client()
 
 # Inicializar FastAPI
