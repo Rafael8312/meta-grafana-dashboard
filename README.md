@@ -12,3 +12,5 @@ Dashboard de performance Meta Ads com Grafana - Insights em tempo real de campan
 - ✅ Deploy no Render.com (free tier)
 
 ## Arquitetura
+
+rigger redeploy
