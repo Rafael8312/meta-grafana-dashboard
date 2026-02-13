@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: meta-grafana-api
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GOOGLE_CLOUD_PROJECT
+        value: dashmeta-aba7d
+      - key: META_AD_ACCOUNT_ID
+        value: act_1934031877437397
+      - key: META_ACCESS_TOKEN
+        sync: false
+      - key: API_KEY
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.11.0
+
+  - type: cron
+    name: meta-collector
+    schedule: "*/30 * * * *"
+    buildCommand: pip install -r requirements.txt
+    startCommand: "curl -X POST -H 'X-API-Key: $API_KEY' https://meta-grafana-api.onrender.com/collect"
+    envVars:
+      - key: API_KEY
+        fromService:
+          type: web
+          name: meta-grafana-api
+          envVarKey: API_KEY
